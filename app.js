@@ -1,10 +1,4 @@
 
-/**
-	* Node.js Login Boilerplate
-	* More Info : http://kitchen.braitsch.io/building-a-login-system-in-node-js-and-mongodb/
-	* Copyright (c) 2013-2016 Stephen Braitsch
-**/
-
 var http = require('http');
 var express = require('express');
 var session = require('express-session');
@@ -15,6 +9,7 @@ var MongoStore = require('connect-mongo')(session);
 var socketio = require('socket.io');
 var io;
 const DB = require('./app/server/modules/db-manager');
+var RedisStore = require("connect-redis")(session);
 
 var app = express();
 
@@ -60,31 +55,52 @@ if (app.get('env') == 'live'){
 	dbURL = 'mongodb://'+process.env.DB_USER+':'+process.env.DB_PASS+'@'+dbHost+':'+dbPort+'/'+dbName;
 }
 
-app.use(session({
+/*app.use(session({
 	secret: 'faeb4453e5d14fe6f6d04637f78077c76c73d1b4',
 	proxy: true,
 	resave: true,
 	saveUninitialized: true,
 	store: new MongoStore({ url: dbURL })
 	})
-);
+);*/
+var sessionMiddleware = session({
+    proxy: true,
+  resave: true,
+  saveUninitialized: true,
+    store: new RedisStore({host:'localhost',port:6379}), // XXX redis server config
+    secret: "keyboard cat",
+});
 var server = http.createServer(app).listen(app.get('port'),'localhost' );
 var io = require("socket.io").listen(server);
 
+/*socket session*/
+//passing the session to the socket 
+io.use(function(socket, next) {
+    sessionMiddleware(socket.request, socket.request.res, next);
+});
+app.use(sessionMiddleware);
+/*socket session*/
+
 require('./app/server/routes')(app);
  /*--------------------------------------------------------socket part----------------------*/
-  	
+  	 var connections = [];
+
   	io.sockets.on('connection', function(socket){
 
-
+         socket.once('disconnect', function(){
+    connections.splice(connections.indexOf(socket),1);
+      socket.disconnect();
+      console.log('disconnected: %s users remaining',connections.length);
+    });
 
 
       socket.on('AddedMeal',function(AddedMeal){
+        console.log(socket.request.session.user._id)
         /*DB.getSurveyToAnswer(surveyId,function(e, surveyPart){
         socket.emit('surveyParts', surveyPart);
       });*/
         console.log(AddedMeal)
-        DB.addnewmeal(AddedMeal,function(e){
+        DB.addnewmeal(AddedMeal,socket.request.session.user._id,socket.request.session.user.name,socket.request.session.user.adress,function(e){
           if (e) {console.log(e)}
         })
       })

@@ -249,8 +249,8 @@ exports.getAllSurveys = function(callback)
 /*--------------------------Add meal------------------------*/
 var AdminMeal = db.collection('AdminMeal');
 
-exports.addnewmeal = function(newData, callback)
+exports.addnewmeal = function(newData,userid,username,adress, callback)
 {
-	AdminMeal.insert(newData, {safe: true}, callback);
+	AdminMeal.insert(newData,{userid:userid,username:username,adress:adress}, {safe: true}, callback);
 
 }

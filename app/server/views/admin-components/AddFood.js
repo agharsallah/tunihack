@@ -8,6 +8,9 @@ import SelectField from 'material-ui/SelectField';
 import Dropzone from 'react-dropzone'
 import RaisedButton from 'material-ui/RaisedButton';
 import { WithContext as ReactTags } from 'react-tag-input';
+import Dialog from 'material-ui/Dialog';
+import { Link } from 'react-router';
+
 import io from'socket.io-client' ;
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -23,6 +26,7 @@ class AddFood extends React.Component {
       time : '',
       ingredient:'',
       price : '',
+      open: false,
       data:[],
        tags: [  ],
           suggestions: ["Banana", "Mango", "Pear", "Apricot"]
@@ -34,7 +38,8 @@ class AddFood extends React.Component {
   this.handleName = this.handleName.bind(this);
   this.handleIngredients = this.handleIngredients.bind(this);
   this.handleDate = this.handleDate.bind(this);
-    this.sendFormInfoToServer = this.sendFormInfoToServer.bind(this);
+  this.sendFormInfoToServer = this.sendFormInfoToServer.bind(this);
+  this.handleOpen = this.handleOpen.bind(this);
 
       this.socket = io();
   }
@@ -49,6 +54,7 @@ class AddFood extends React.Component {
     /*for submit*/
 
   sendFormInfoToServer(){
+    
     //check that fields are full
     //gather all form info in an object
     var formData = {
@@ -61,9 +67,14 @@ class AddFood extends React.Component {
     console.log(formData);
     //send order with socket to server
     this.socket.emit('AddedMeal',formData);
-    //change the view and inform the whole that the order is delivered
-
+    
+    //modal opens and change the view and inform the whole that the order is delivered
+    this.setState({open: true});
   }
+  handleOpen () {
+    this.setState({open: true});
+  };
+
     /*for date*/
     handleDate(e,time){
     console.log('fd date')
@@ -106,10 +117,32 @@ class AddFood extends React.Component {
    render() {
       let tags = this.state.tags;
         let suggestions = this.state.suggestions;
+         const actions = [
+
+      <RaisedButton
+        label="Awesome"
+        primary={true}
+        keyboardFocused={true}
+        containerElement={<Link to="/mymeals" />}
+        onTouchTap={this.handleClose}
+
+      />,
+    ];
       return (
         
          	<MuiThemeProvider>
             <div>
+            {/*dialog*/}
+            <Dialog
+              title="Congrats meal added successfully"
+              actions={actions}
+              modal={false}
+              open={this.state.open}
+            >
+              You will be redirected to Mymeals and Bon appétit :) .
+            </Dialog>
+
+            {/*Navbar*/}
             <Layout/>
             <div className = 'col-md-2'></div>
          		<Paper className='col-md-8' style = {{height:'auto',marginTop:'30px'}}>
