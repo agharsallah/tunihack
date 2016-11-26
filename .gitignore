@@ -3,6 +3,5 @@
 npm-debug.log
 node_modules
 side
-app/server/views/components
-app/server/views/componentSurvey
+app/server/views/_ignore
 _ignore

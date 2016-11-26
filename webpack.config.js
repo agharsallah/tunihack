@@ -5,8 +5,8 @@
 module.exports = {
 
     entry:  [
-                './app/server/views/components/Index.js'
-               /* './app/server/views/componentSurvey/Index.js'*/
+                //'./app/server/views/components/Index.js'
+                './app/server/views/admin-components/Index.js'
             ],
     
     module: {
@@ -24,8 +24,8 @@ module.exports = {
 
     output: {
                 path:'./app/public/js/gulp/',
-                filename: 'reactx.js'
-               /* filename: 'surveyx.js'*/
+                //filename: 'simplex.js'
+                filename: 'adminx.js'
     }
     
 

@@ -47,6 +47,7 @@ module.exports = function(app) {
 	// if user is not logged-in redirect back to login page //
 			res.redirect('/');
 		}	else if ((req.session.user !== null)&&(req.session.user.status === 'simple')) {
+			console.log('here')
 			res.render('home', {
 				title : 'Get-Insight',
 				countries : CT,
@@ -54,6 +55,7 @@ module.exports = function(app) {
 				activeHome:'active',activeSurvey:''
 			});
 		} else {
+			console.log('here2')
 			res.render('homeAdmin', {
 				title : 'Get-Insight',
 				countries : CT,
@@ -178,12 +180,16 @@ module.exports = function(app) {
 	
 	app.post('/signup', function(req, res){
 		AM.addNewAccount({
-			name 	: req.body['name'],
-			email 	: req.body['email'],
-			user 	: req.body['user'],
-			pass	: req.body['pass'],
-			country : req.body['country'],
-			status 	: 'simple'
+			name 			: req.body['name'],
+			email 			: req.body['email'],
+			phone_number 	: req.body['phone_number'],
+			age 			: req.body['age'],
+			job 			: req.body['job'],
+			adress 			: req.body['adress'],
+			user 			: req.body['user'],
+			pass			: req.body['pass'],
+			country 		: req.body['country'],
+			status 			: 'simple'
 		}, function(e){
 			if (e){
 				res.status(400).send(e);
@@ -201,12 +207,16 @@ module.exports = function(app) {
 	
 	app.post('/signupAdmin', function(req, res){
 		AM.addNewAccount({
-			name 	: req.body['name'],
-			email 	: req.body['email'],
-			user 	: req.body['user'],
-			pass	: req.body['pass'],
-			country : req.body['country'],
-			status 	: 'admin'
+			name 			: req.body['name'],
+			email 			: req.body['email'],
+			phone_number 	: req.body['phone_number'],
+			job 			: req.body['job'],
+			age 			: req.body['age'],
+			adress 			: req.body['adress'],
+			user 			: req.body['user'],
+			pass			: req.body['pass'],
+			country 		: req.body['country'],
+			status 			: 'admin'
 		}, function(e){
 			if (e){
 				res.status(400).send(e);

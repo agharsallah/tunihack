@@ -12,24 +12,41 @@ input(type='hidden', value= user._id)#userId
 		.form-group
 			label.control-label.col-sm-3 Name
 			.col-sm-9
-				input.form-control#name-tf(type='text', name='name', value= user.name)
+				input.form-control#name-tf(type='text', name='name', value= user.name,placeholder="ex: ALI")
+		
+		.form-group
+			label.control-label.col-sm-3 Age
+			.col-sm-9
+				input.form-control#name-tf(type='text', name='age', placeholder="ex: 21")
 
 		.form-group
 			label.control-label.col-sm-3 Email
 			.col-sm-9
-				input.form-control#email-tf(type='text', name='email', value= user.email)
-		
+				input.form-control#email-tf(type='text', name='email', value= user.email, placeholder="ex: ALI@X.com")
+		.form-group
+			label.control-label.col-sm-3 Job
+			.col-sm-9
+				select.form-control#job(name='job')
+					option(value='student') student
+					option(value='Employee') Employee
+					option(value='tourist') tourist
+					option(value='Other') Other
 		.form-group
 			label.control-label.col-sm-3 phone number
 			.col-sm-9
-				input.form-control#email-tf(type='text', name='email', value= user.email)
+				input.form-control#phone-tf(type='text', name='phone_number',placeholder="ex: XXXXXXXX")
 		
 		.form-group
-			label.control-label.col-sm-3 Location
+			label.control-label.col-sm-3 city
 			.col-sm-9
 				select.form-control#country-list(name='country')
 					each item in countries
 						option(selected=item.name == user.country)= item.name
+
+		.form-group
+			label.control-label.col-sm-3 adress
+			.col-sm-9
+				input.form-control#adress-tf(type='text', name='adress',placeholder="ex: 25 Rue Test ")
 		hr
 		h6#sub2
 		.form-group
