@@ -31,7 +31,7 @@ app.use(require('stylus').middleware({ src: __dirname + '/app/public' }));
 app.use(express.static(__dirname + '/app/public'));
 
 /*Webpack midelware*/
-/*var webpack = require ('webpack')  
+var webpack = require ('webpack')  
 var webpackDevMiddleware = require ('webpack-dev-middleware')  
 var webpackHotMiddleware = require ('webpack-hot-middleware')  
 var config = require ('./webpack.config.js')  
@@ -47,7 +47,7 @@ app.use(webpackDevMiddleware(compiler, {
 app.use(webpackHotMiddleware(compiler, {  
     log: console.log 
 })) 
-*/
+
 // build mongo database connection url //
 
 var dbHost = process.env.DB_HOST || 'localhost'
@@ -76,16 +76,17 @@ require('./app/server/routes')(app);
   	
   	io.sockets.on('connection', function(socket){
 
-  		
-  		DB.getAllSurveys(function(e, surveys){
-     		socket.emit('AllSurveys', surveys);
-    	});
 
 
-      socket.on('surveyToAnswerId',function(surveyId){
-        DB.getSurveyToAnswer(surveyId,function(e, surveyPart){
+
+      socket.on('AddedMeal',function(AddedMeal){
+        /*DB.getSurveyToAnswer(surveyId,function(e, surveyPart){
         socket.emit('surveyParts', surveyPart);
-      });
+      });*/
+        console.log(AddedMeal)
+        DB.addnewmeal(AddedMeal,function(e){
+          if (e) {console.log(e)}
+        })
       })
 
 

@@ -214,7 +214,7 @@ var findByMultipleFields = function(a, callback)
 
 /*Survey.js ---------------------------------------------------------Exports the survey manager*/
 
-var survey = db.collection('survey');
+/*var survey = db.collection('survey');
 
 exports.addNewSurvey = function(newData, callback)
 {
@@ -229,11 +229,11 @@ exports.getAllSurveys = function(callback)
 		if (e) callback(e)
 		else callback(null, res)
 	});
-}
+}*/
 
 /*get the survey parts user is gone answer*/
 
-exports.getSurveyToAnswer = function(surveyId,callback)
+/*exports.getSurveyToAnswer = function(surveyId,callback)
 {
 	var {ObjectId} = require('mongodb'); //like ObjectId=require('mongodb').ObjectId;
 	var ido = new ObjectId(surveyId); // convert document's _id from string to ObjectId
@@ -243,7 +243,14 @@ exports.getSurveyToAnswer = function(surveyId,callback)
 		if (e) callback(e)
 		else callback(null, res)
 	});
+}*/
+
+
+/*--------------------------Add meal------------------------*/
+var AdminMeal = db.collection('AdminMeal');
+
+exports.addnewmeal = function(newData, callback)
+{
+	AdminMeal.insert(newData, {safe: true}, callback);
+
 }
-
-
-
