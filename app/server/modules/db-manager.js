@@ -3,6 +3,7 @@ var crypto 		= require('crypto');
 var MongoDB 	= require('mongodb').Db;
 var Server 		= require('mongodb').Server;
 var moment 		= require('moment');
+var _ = require('lodash');
 
 /*
 	ESTABLISH DATABASE CONNECTION
@@ -250,7 +251,10 @@ exports.getAllSurveys = function(callback)
 var AdminMeal = db.collection('AdminMeal');
 
 exports.addnewmeal = function(newData,userid,username,adress, callback)
-{
-	AdminMeal.insert(newData,{userid:userid,username:username,adress:adress}, {safe: true}, callback);
+{	
+	var obj = {userid:userid,username:username,adress:adress};
+	var res = _.merge(obj, newData);
+	console.log(res)
+	AdminMeal.insert(res, {safe: true}, callback);
 
 }
