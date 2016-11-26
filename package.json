@@ -1,0 +1,62 @@
+{
+  "name": "node-login",
+  "version": "1.5.0",
+  "description": "A template for quickly building login systems on top of Node.js & MongoDb",
+  "author": "Stephen Braitsch <stephen@braitsch.io>",
+  "website": {
+    "url": "https://nodejs-login.herokuapp.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:braitsch/node-login.git"
+  },
+  "dependencies": {
+    "babel-preset-react": "^6.16.0",
+    "babelify": "^7.3.0",
+    "body-parser": "1.14.1",
+    "connect-mongo": "0.8.2",
+    "connect-redis": "^3.1.0",
+    "cookie-parser": "1.4.0",
+    "emailjs": "^1.0.4",
+    "errorhandler": "1.4.2",
+    "express": "4.13.3",
+    "express-session": "1.11.3",
+    "express-socket.io-session": "^1.3.1",
+    "extract-text-webpack-plugin": "^1.0.1",
+    "jade": "1.11.0",
+    "lodash": "^4.16.4",
+    "material-ui": "^0.16.0",
+    "moment": "2.10.3",
+    "mongodb": "2.0.45",
+    "numeral": "^1.5.3",
+    "react": "^15.3.2",
+    "react-d3-basic": "^1.6.11",
+    "react-dom": "^15.3.2",
+    "react-google-charts": "^1.2.1",
+    "react-jsonschema-form": "^0.40.0",
+    "react-router": "^2.8.1",
+    "react-tap-event-plugin": "^1.0.0",
+    "recharts": "^0.15.2",
+    "socket.io": "^1.5.1",
+    "socket.io-client": "^1.5.1",
+    "stylus": "0.52.4"
+  },
+  "devDependencies": {
+    "babel-core": "^6.17.0",
+    "babel-loader": "^6.2.5",
+    "babel-preset-es2015": "^6.16.0",
+    "babel-preset-react": "^6.0.15",
+    "babel-preset-stage-0": "^6.0.15",
+    "react-hot-loader": "^1.3.0",
+    "webpack": "^1.13.2",
+    "webpack-dev-server": "^1.16.2",
+    "webpack-notifier": "^1.4.1",
+    "webpack-hot-middleware": "^2.13.0"
+  },
+  "engines": {
+    "node": "4.2.1"
+  },
+  "scripts": {
+    "start": "webpack && node app.js"
+  }
+}

@@ -1,0 +1,54 @@
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: #BBDEFB;
+}
+.boutonRadio{
+margin-left: 10px;
+}
+.paper{
+  background-color: #D1C4E9;
+}
+.textst{
+text-align: center;
+height:100px;
+}
+
+/* NumberProp component */
+.texteffect{
+  font-size: 40px;
+  margin-top: 28px;
+}
+.detaileffect{
+  font-size: 35px;
+  margin-top: 15px;
+}
+
+/* responsivity of chart */
+.contain{-webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 10px;
+  width: 80%;
+  height: 300px;
+}
+
+/* title for each card .js */
+.title {
+ color: #333333;
+  font-family: 'Bitter', serif;
+   font-size: 50px;
+    font-weight: normal;
+     line-height: 54px;
+    margin-top: 25px;
+    margin-left: 25%;
+    margin-bottom: 25px;
+    }
+
+/* for the choicelist divs each div contain an input */
+.choicelist{
+  margin-top:16px; 
+}
+
+#mapid { height: 180px; }
