@@ -249,12 +249,31 @@ exports.getAllSurveys = function(callback)
 
 /*--------------------------Add meal------------------------*/
 var AdminMeal = db.collection('AdminMeal');
+var userOrder = db.collection('userOrder');
 
-exports.addnewmeal = function(newData,userid,username,adress, callback)
+exports.addnewmeal = function(newData,userid,username,adress,phone_number, callback)
 {	
-	var obj = {userid:userid,username:username,adress:adress};
+	var obj = {userid:userid,username:username,adress:adress,phone_number:phone_number};
 	var res = _.merge(obj, newData);
 	console.log(res)
 	AdminMeal.insert(res, {safe: true}, callback);
+
+}
+
+exports.getHostPhone = function(mealid, callback)
+{	
+	AdminMeal.findOne({_id: getObjectId(mealid)},
+		function(e, res) {
+		if (e) callback(e)
+		else callback(null, res)
+	});
+
+}
+exports.addneworder = function(newData,userid,username,adress,phone_number, callback)
+{	
+	var obj = {userid:userid,username:username,adress:adress,phone_number:phone_number};
+	var res = _.merge(obj, newData);
+	console.log(res)
+	userOrder.insert(res, {safe: true}, callback);
 
 }

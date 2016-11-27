@@ -1,27 +1,209 @@
-/*defining the navbar*/
-//and setting the language switcher here
-import React, { Component } from 'react';
+import React from 'react';
 import Paper from 'material-ui/Paper';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Layout from './Layout'
+import TextField from 'material-ui/TextField';
+import TimePicker from 'material-ui/TimePicker';
+import MenuItem from 'material-ui/MenuItem';
+import SelectField from 'material-ui/SelectField';
+import Dropzone from 'react-dropzone'
+import RaisedButton from 'material-ui/RaisedButton';
+import { WithContext as ReactTags } from 'react-tag-input';
+import Dialog from 'material-ui/Dialog';
+import { Link } from 'react-router';
 
+import io from'socket.io-client' ;
 
-export default class OrderItem extends Component{
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
-	constructor(props) {
+	
+class AddFood extends React.Component {
+  constructor(props) {
     super(props);
-	  }
+    this.socket = io();
+    this.state = {
+      value: 1,
+      comments: '',
+      time : '',
+      open: false,
+       tags: [  ],
+          suggestions: ["Banana", "Mango", "Pear", "Apricot"]
+    };
+  this.handleChange = this.handleChange.bind(this);
+  this.handleDelete = this.handleDelete.bind(this);
+  this.handleAddition = this.handleAddition.bind(this);
+  this.handlecomments = this.handlecomments.bind(this);
+  this.handleDate = this.handleDate.bind(this);
+  this.sendFormInfoToServer = this.sendFormInfoToServer.bind(this);
+  this.handleOpen = this.handleOpen.bind(this);
+
+      this.socket = io();
+  }
+  
+
+  handleChange (event, index, value) {
+    this.setState({value})
+  } 
+  onDrop (files) {
+      console.log('Received files: ', files);
+    }
+    /*for submit*/
+
+  sendFormInfoToServer(){
+    
+    //check that fields are full
+    //gather all form info in an object
+    var formData = {
+        value: this.state.value,
+          time:this.state.time,
+          comments:this.state.comments,
+          mealid: this.props.params.id
+          };
+    console.log(formData);
+    //send order with socket to server
+    this.socket.emit('AddOrder',formData);
+    
+    //modal opens and change the view and inform the whole that the order is delivered
+    this.setState({open: true});
+  }
+  handleOpen () {
+    this.setState({open: true});
+  };
+
+    /*for date*/
+    handleDate(e,time){
+    console.log('fd date')
+    console.log(time)
+    this.setState({time});
+    }
+  /*for fd price*/
+    handlecomments(comments){
+    console.log('fd comments')
+    console.log(comments.target.value)
+    this.setState({comments:comments.target.value});
+  }
+
+/* for tags*/
+   handleDelete(i) {
+        let tags = this.state.tags;
+        tags.splice(i, 1);
+        this.setState({tags: tags});
+    }
+    handleAddition(tag) {
+        let tags = this.state.tags;
+        tags.push({
+            id: tags.length + 1,
+            text: tag
+        });
+        this.setState({tags: tags});
+    }
+
+   render() {
+      let tags = this.state.tags;
+        let suggestions = this.state.suggestions;
+         const actions = [
+
+      <RaisedButton
+        label="Awesome"
+        primary={true}
+        keyboardFocused={true}
+        containerElement={<Link to="/requests" />}
+        onTouchTap={this.handleClose}
+
+      />,
+    ];
+      return (
+        
+         	<MuiThemeProvider>
+            <div>
+            {/*dialog*/}
+            <Dialog
+              title="Congrats meal ordered successfully"
+              actions={actions}
+              modal={false}
+              open={this.state.open}
+            >
+              You will get a notif when your order is accepted  :) .
+            </Dialog>
+
+            {/*Navbar*/}
+            <Layout/>
+            <div className = 'col-md-2'></div>
+         		<Paper className='col-md-8' style = {{height:'auto',marginTop:'30px'}}>
+            
+            <div className='col-md-12 topP' style = {{marginBottom:'20px'}}>
+              <div className = 'col-md-5'> &nbsp;</div>
+              <h1 >Order Process</h1>
+            </div>
+            
+
+            
+            <div className = 'col-md-12'>
+              <p className='col-md-5 topP'>need the food at :</p>
+              <TimePicker
+               className='col-md-7'
+                textFieldStyle={{width : '50%'}}
+                 hintText="click to select time"
+                 onChange={this.handleDate}
+                 />
+
+            </div>
+            <br/>
+
+             <div className = 'col-md-12'>
+                <p className='col-md-5 topP'>Quantity :</p>
+                <SelectField
+                  value={this.state.value}
+                  onChange={this.handleChange}
+                  className='col-md-7'
+                  floatingLabelStyle={{width:'50%'}}
+                >
+                  <MenuItem value={1} primaryText="1 person" />
+                  <MenuItem value={2} primaryText="2 person" />
+                  <MenuItem value={3} primaryText="3 person" />
+                  <MenuItem value={4} primaryText="4 person" />
+                  <MenuItem value={5} primaryText="5 persons" />
+                  <MenuItem value={10} primaryText="+10 persons" />
+                </SelectField>
+            </div> 
+            <br/>
+            
+            <div className = 'col-md-12'>
+              <p className='col-md-5 topP'>add-ons & comments :</p>
+              <TextField
+                className='col-md-7'
+                hintText=" bzayed sausse | na9ass chwaya mil7 "
+                style={{width : '50%'}}
+                onChange={this.handlecomments}
+              />            
+            </div>
+            <br/>
 
 
-	render(){
+             <div className = 'col-md-12 topP'>
+            <div className='col-md-3'>&nbsp;</div>
+                <RaisedButton 
+                label="Order" 
+                primary={true}  
+                style={{width:'50%'}}
+                onTouchTap={this.sendFormInfoToServer}
+                />
+            </div>
+            <br/> <br/> <br/>
+{/*             <ReactTags tags={tags}
+                    suggestions={suggestions}
+                    handleDelete={this.handleDelete}
+                    handleAddition={this.handleAddition}
+                    />*/}
 
-		return(
-			<MuiThemeProvider>
-			<div>
-			<Layout/>
-				<h1>ITEM</h1>
-	    	</div>
-	    	</MuiThemeProvider>
-		);
-	}
-};
+            </Paper>
+            
+            <div className = 'col-md-2'></div>
+            </div>
+         	</MuiThemeProvider>
+
+        
+      );
+   }
+}
+
+export default AddFood;

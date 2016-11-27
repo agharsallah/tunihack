@@ -41,6 +41,7 @@
     "react-tap-event-plugin": "^1.0.0",
     "react-translate-component": "^0.13.1",
     "recharts": "^0.15.2",
+    "request": "^2.79.0",
     "socket.io": "^1.5.1",
     "socket.io-client": "^1.6.0",
     "stylus": "0.52.4"

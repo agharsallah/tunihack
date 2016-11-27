@@ -10,6 +10,7 @@ var socketio = require('socket.io');
 var io;
 const DB = require('./app/server/modules/db-manager');
 var RedisStore = require("connect-redis")(session);
+var request = require('request');
 
 var app = express();
 
@@ -96,14 +97,34 @@ require('./app/server/routes')(app);
 
       socket.on('AddedMeal',function(AddedMeal){
         console.log(socket.request.session.user._id)
-        /*DB.getSurveyToAnswer(surveyId,function(e, surveyPart){
-        socket.emit('surveyParts', surveyPart);
-      });*/
         console.log(AddedMeal)
-        DB.addnewmeal(AddedMeal,socket.request.session.user._id,socket.request.session.user.name,socket.request.session.user.adress,function(e){
+        DB.addnewmeal(AddedMeal,socket.request.session.user._id,socket.request.session.user.name,socket.request.session.user.adress,socket.request.session.user.phone_number,function(e){
           if (e) {console.log(e)}
         })
       })
 
+      socket.on('AddOrder',function(order){
+       DB.addneworder(order,socket.request.session.user._id,socket.request.session.user.name,socket.request.session.user.adress,socket.request.session.user.phone_number,function(e){
+          if (e) {console.log(e)}
+        })       
+       DB.getHostPhone(order.mealid,function(e,res){
+          if (e) {console.log(e)}else{
+              console.log(res.phone_number)
+              var message = 'vous avez une ordere pour'+ order.value+' personne concernant '+res.name 
+              var url  = 'http://sms.tritux.com/v1/send'
+              var propertiesObject = {'username': 'tunihack3',
+                              'password': 'xut1251',
+                              'origin': 'tunihack',
+                              destination:res.phone_number,
+                              text:message };
+
+              request({url:url, qs:propertiesObject}, function(err, response, body) {
+                if(err) { console.log(err); return; }
+                console.log("Get response: " + response.statusCode);
+              });
+          }
+        })
+
+      })
 
 	});
