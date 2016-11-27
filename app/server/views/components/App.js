@@ -1,5 +1,6 @@
 import React from 'react';
 import Paper from 'material-ui/Paper';
+import Layout from './Layout'
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 var injectTapEventPlugin = require("react-tap-event-plugin");
@@ -18,7 +19,9 @@ class App extends React.Component {
       return (
          <div>
          	<MuiThemeProvider>
-         		<h1>HI Simple</h1>
+         		<div>
+             <Layout/> 
+            </div>
          	</MuiThemeProvider>
 
          </div>

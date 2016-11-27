@@ -5,8 +5,8 @@ const path = require('path');
 module.exports = {
     entry:  [
                 'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
-                //'./app/server/views/components/Index.js'
-                './app/server/views/admin-components/Index.js'
+                './app/server/views/components/Index.js'
+                //'./app/server/views/admin-components/Index.js'
             ],
     
     module: {
@@ -25,8 +25,8 @@ module.exports = {
     output: {
                 path: __dirname + 'app/public',
                 publicPath: '/',
-               //filename: 'js/gulp/simplex.js'
-                filename: 'js/gulp/adminx.js'
+               filename: 'js/gulp/simplex.js'
+               // filename: 'js/gulp/adminx.js'
     },
     
     plugins: [
