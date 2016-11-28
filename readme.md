@@ -18,11 +18,13 @@
 * [material UI](material-ui.com) - UI Components 
 
 ##Installation & Setup
-
-
-##Password Retrieval
-
+1) install mongo and start the server : mongod
+2) install redis and start it (for session management)
+3)npm install (to install the dependencies)
+4) node app.js (to start the node app)
 
 
 ##Contributing
-
+uncomment the webpackhotreloader
+delete the js files from app\public\js\gulp
+npm start after choosing the files in webpack
