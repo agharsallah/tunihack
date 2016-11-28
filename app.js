@@ -27,7 +27,7 @@ app.use(require('stylus').middleware({ src: __dirname + '/app/public' }));
 app.use(express.static(__dirname + '/app/public'));
 
 /*Webpack midelware*/
-var webpack = require ('webpack')  
+/*var webpack = require ('webpack')  
 var webpackDevMiddleware = require ('webpack-dev-middleware')  
 var webpackHotMiddleware = require ('webpack-hot-middleware')  
 var config = require ('./webpack.config.js')  
@@ -42,7 +42,7 @@ app.use(webpackDevMiddleware(compiler, {
 }))
 app.use(webpackHotMiddleware(compiler, {  
     log: console.log 
-})) 
+})) */
 
 // build mongo database connection url //
 
@@ -94,6 +94,12 @@ require('./app/server/routes')(app);
       console.log('disconnected: %s users remaining',connections.length);
     });
 
+         //setInterval(function(){ 
+      DB.getAllRequests(function(e, requests){
+        console.log(requests)
+        socket.emit('requests', requests);
+      });
+      //}, 1000);
 
       socket.on('AddedMeal',function(AddedMeal){
         console.log(socket.request.session.user._id)
@@ -110,7 +116,10 @@ require('./app/server/routes')(app);
        DB.getHostPhone(order.mealid,function(e,res){
           if (e) {console.log(e)}else{
               console.log(res.phone_number)
-              var message = 'vous avez une ordere pour'+ order.value+' personne concernant '+res.name 
+              var time = res.time;
+              var x=((time.split('T'))[1].split('.'));
+              console.log(x[0]);
+              var message = 'vous avez une ordere pour'+ order.value+' personne concernant '+res.name+' avant '+x[0]
               var url  = 'http://sms.tritux.com/v1/send'
               var propertiesObject = {'username': 'tunihack3',
                               'password': 'xut1251',

@@ -277,3 +277,12 @@ exports.addneworder = function(newData,userid,username,adress,phone_number, call
 	userOrder.insert(res, {safe: true}, callback);
 
 }
+exports.getAllRequests = function(callback)
+{	
+		userOrder.find().toArray(
+		function(e, res) {
+		if (e) callback(e)
+		else callback(null, res)
+	});
+
+}

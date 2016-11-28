@@ -34,6 +34,7 @@ export default class Layout extends Component{
 		        <li><Link to={'/order'} activeClassName="activeN">Order</Link></li>
 		        <li><Link to={'/requests'} activeClassName="activeN">Requests</Link></li>
 		        <li><Link to={'/mymeals'} activeClassName="activeN">my meals</Link></li>
+		        <li><Link to={'/user-rating'} activeClassName="activeN">my ratings</Link></li>
 		        
 		        <li ><Link to={'/About'} activeClassName="activeN">about</Link></li>
 		        <li ><Link to={'/logout'} activeClassName="activeN">signout</Link></li>

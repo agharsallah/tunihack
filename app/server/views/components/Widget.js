@@ -21,9 +21,9 @@ class Widget extends React.Component {
       return (
          	<MuiThemeProvider>
               
-                <article className="style1">
-                  <span className="image">
-                    <img src='https://res.cloudinary.com/dcgm8rokt/image/upload/v1480210494/tastira_yxmfaa.jpg' alt="" />
+                <article className={this.props.style}>
+                  <span className="image"style={{height:'200px'}}>
+                    <img src={this.props.links} alt="" />
                   </span>
                   <Link to={lin}>
                     <h2>{this.props.name}</h2>
